@@ -1,5 +1,6 @@
 class UrlShort < ApplicationRecord
   validates :full_url, presence: true
+  validates :full_url, url: true
   validates :short_url, uniqueness: true
 
   before_save :create_short_url
