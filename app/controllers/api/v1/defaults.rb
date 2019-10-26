@@ -28,6 +28,10 @@ module Api
           error_response(message: e.message, status: 422)
         end
 
+        rescue_from ActiveModel::StrictValidationFailed do |e|
+          error_response(message: e.message, status: 422)
+        end
+
         rescue_from NoMethodError do |e|
           error_response(message: e.message, status: 404)
         end
