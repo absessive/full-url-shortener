@@ -4,9 +4,9 @@ module Api
       include Api::V1::Defaults
 
       resource :url_shorts do
-        desc 'Returm the full URL'
+        desc 'Returns the full URL'
         params do
-          requires :short_url, type: String, desc: "Short URL associated with a UrlShort"
+          requires :short_url, type: String, desc: 'Short URL associated with a UrlShort'
         end
         get ':short_url', root: 'short_url' do
           authenticate_request
@@ -18,9 +18,9 @@ module Api
           }
         end
 
-        desc "Creates and/or returns short URL from a full URL"
+        desc 'Creates and/or returns short URL from a full URL'
         params do
-          requires :full_url, type: String, desc: "Full url that needs to be shortened"
+          requires :full_url, type: String, desc: 'Full url that needs to be shortened'
         end
         post "/new" do
           authenticate_request

@@ -43,6 +43,10 @@ module Api
         rescue_from NoMethodError do |e|
           error_response(message: e.message, status: 404)
         end
+      
+        rescue_from ApplicationController::NotAuthorized do |e|
+          error_response(message: e.message, status: 401)
+        end
       end
     end
   end

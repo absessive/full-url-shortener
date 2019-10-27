@@ -7,7 +7,8 @@ class UrlValidator < ActiveModel::EachValidator
   # not actually be valid, so this checks for both.
   def url_valid?(url)
     return false if url.match?(/\s/)
+    
     url = URI.parse(url) rescue false
-    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+    url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS)
   end
 end
