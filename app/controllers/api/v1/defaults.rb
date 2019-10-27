@@ -18,6 +18,14 @@ module Api
           def logger
             Rails.logger
           end
+
+          def authenticate_request            
+            @current_user = AuthorizeApiRequest.call(request.headers).result                        
+          end
+
+          def current_user
+            @current_user
+          end
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|

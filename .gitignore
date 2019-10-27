@@ -20,6 +20,7 @@
 /storage/*
 !/storage/.keep
 .byebug_history
+.vscode/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
