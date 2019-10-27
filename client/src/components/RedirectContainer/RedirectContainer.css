@@ -1,0 +1,16 @@
+.RedirectContainer {
+  margin: 20px auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 10px;
+  border: 2px whitesmoke solid;
+}
+.error-message {
+  color: red;
+  font-weight: 700;
+}  

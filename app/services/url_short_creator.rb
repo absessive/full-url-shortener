@@ -1,5 +1,7 @@
 class UrlShortCreator
   BLAKE_KEY = Blake2::Key.none
+  # Use email as key 
+  # key = Blake2::Key.from_string("foo bar baz")
 
   def initialize(full_url)
     @full_url = full_url
