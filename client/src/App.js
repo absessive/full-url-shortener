@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
-import './App.css';
-import RedirectContainer from './components/RedirectContainer/RedirectContainer';
-import CreateShortContainer from './components/CreateShortContainer/CreateShortContainer';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
+import SignIn from "./components/User/SignIn";
 
 const styles = theme => ({
   root: {
     padding: theme.spacing(3, 2),
-  },
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  }
 });
 
 class App extends Component {
@@ -17,11 +20,10 @@ class App extends Component {
     return (
       <Paper className={classes.root}>
         <div className="App">
-          <header className="App-header">
-            <h1>URL Shortening Service</h1>
-          </header>
-          <RedirectContainer />
-          <CreateShortContainer />
+          <Typography component="h1" variant="h3">
+            URL Shortening Service
+          </Typography>
+          <SignIn />
         </div>
       </Paper>
     );
