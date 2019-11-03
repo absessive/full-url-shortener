@@ -9,13 +9,22 @@ module Api
           requires :short_url, type: String, desc: 'Short URL associated with a UrlShort'
         end
         get ':short_url', root: 'short_url' do
-          authenticate_request
-          url_short = UrlShort.find_by(short_url: permitted_params[:short_url], user: current_user)
-          {
-            full_url: url_short.full_url,
-            short_url: params[:short_url],
-            logged_in: current_user.present?
-          }
+          authenticate_request          
+          url_short = UrlShort.find_by(short_url: permitted_params[:short_url], 
+            user: current_user)
+          UrlShortRepresenter.new(url_short)
+        end
+
+        desc 'Deletes the associated record'
+        params do
+          requires :short_url, type: String, desc: 'Short URL associated with a UrlShort'
+        end
+        delete ':short_url', root: 'short_url' do
+          authenticate_request          
+          url_short = UrlShort.find_by(short_url: permitted_params[:short_url], 
+            user: current_user)
+          url_short.destroy
+          UrlShortRepresenter.new(url_short)
         end
 
         desc 'Creates and/or returns short URL from a full URL'
@@ -30,6 +39,13 @@ module Api
             short_url: url_short.short_url,
             logged_in: current_user.present?
           }
+        end
+
+        desc 'Get list of all short URLs created by user'
+        get '/' do          
+          authenticate_request
+          url_shorts = UrlShort.where(user: current_user)
+          UrlShortRepresenter.for_collection.new(url_shorts)
         end
       end
     end

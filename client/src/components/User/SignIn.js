@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { createBrowserHistory } from "history";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -12,6 +13,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import AuthService from "../AuthService";
 
 const styles = theme => ({
   "@global": {
@@ -45,11 +48,11 @@ class SignIn extends Component {
     this.state = {
       email: "",
       password: "",
-      authToken: "",
       errorMessage: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.signIn = this.signIn.bind(this);
+    this.Auth = new AuthService();
   }
 
   handleChange(event) {
@@ -61,18 +64,24 @@ class SignIn extends Component {
   }
 
   signIn() {
-    const postBody = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    axios
-      .post("/api/v1/users/authenticate", postBody)
-      .then(response => {
-        this.setState({ authToken: response.data.auth_token });
-      })
-      .catch(_error => {
-        console.log("Invalid Credentials");
-      });
+    const history = createBrowserHistory();
+    const location = history.location;
+    this.Auth.login(this.state.email, this.state.password);
+    // const postBody = {
+    //   email: this.state.email,
+    //   password: this.state.password
+    // };
+    // console.log(history);
+
+    // axios
+    //   .post("/api/v1/users/authenticate", postBody)
+    //   .then(response => {
+    //     localStorage.setItem("authToken", response.data.auth_token);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     console.log("Invalid Credentials");
+    //   });
   }
 
   render() {
@@ -114,7 +123,6 @@ class SignIn extends Component {
               autoComplete="current-password"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"

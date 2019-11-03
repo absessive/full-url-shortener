@@ -15,6 +15,7 @@
 /tmp
 /log
 /coverage
+/**/node_modules
 
 # Ignore uploaded files in development.
 /storage/*

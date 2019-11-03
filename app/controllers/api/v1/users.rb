@@ -30,7 +30,7 @@ module Api
           if command.success?
             { auth_token: command.result }
           else
-            raise ApplicationController::NotAuthorized.new('Invalid Credentials')            
+            raise ApplicationController::NotAuthorized.new('Invalid Credentials')
           end
         end
       end

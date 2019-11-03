@@ -19,8 +19,8 @@ module Api
             Rails.logger
           end
 
-          def authenticate_request            
-            @current_user = AuthorizeApiRequest.call(request.headers).result                        
+          def authenticate_request
+            @current_user = AuthorizeApiRequest.call(request.headers).result
           end
 
           def current_user
@@ -43,7 +43,7 @@ module Api
         rescue_from NoMethodError do |e|
           error_response(message: e.message, status: 404)
         end
-      
+
         rescue_from ApplicationController::NotAuthorized do |e|
           error_response(message: e.message, status: 401)
         end
