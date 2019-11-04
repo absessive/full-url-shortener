@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LockOpen from "@material-ui/icons/LockOpenRounded";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -39,36 +36,43 @@ const styles = theme => ({
   }
 });
 
-class SignIn extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
       password: "",
+      name: "",
       errorMessage: "",
       redirect: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.signIn = this.signIn.bind(this);
     this.authService = new AuthService();
+    this.register = this.register.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
   }
 
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
-  renderRedirect() {
-    if (this.state.redirect) {
-      this.props.setTab(2);
-      return <Redirect to="/create" />;
+  handleChange(event) {
+    if (event.target.id === "email") {
+      this.setState({ email: event.target.value });
+    } else if (event.target.id === "password") {
+      this.setState({ password: event.target.value });
+    } else if (event.target.id === "name") {
+      this.setState({ name: event.target.value });
     }
   }
 
-  componentDidMount() {
-    this.authService.setToken(null);
+  handleKeyPress(event) {
+    if (
+      event.key === "Enter" &&
+      this.state.email &&
+      this.state.password &&
+      this.state.name
+    ) {
+      this.register();
+    }
   }
 
   setRedirect() {
@@ -77,23 +81,19 @@ class SignIn extends Component {
     });
   }
 
-  handleChange(event) {
-    if (event.target.id === "email") {
-      this.setState({ email: event.target.value });
-    } else if (event.target.id === "password") {
-      this.setState({ password: event.target.value });
+  renderRedirect() {
+    if (this.state.redirect) {
+      this.props.setTab(1);
+      return <Redirect to="/signin" />;
     }
   }
 
-  handleKeyPress(event) {
-    if (event.key === "Enter" && this.state.email && this.state.password) {
-      this.signIn();
-    }
-  }
-
-  signIn() {
-    this.authService.login(this.state.email, this.state.password);
-    this.setRedirect();
+  register() {
+    this.authService.register(
+      this.state.email,
+      this.state.password,
+      this.state.name
+    );
   }
 
   render() {
@@ -105,12 +105,24 @@ class SignIn extends Component {
         {this.renderRedirect()}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <LockOpen />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Register
           </Typography>
           <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              onChange={this.handleChange}
+              autoFocus
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -141,17 +153,10 @@ class SignIn extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.signIn}
+              onClick={this.register}
             >
-              Sign In
+              Register User
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Container>
@@ -159,4 +164,4 @@ class SignIn extends Component {
   }
 }
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Register);

@@ -1,6 +1,5 @@
 import decode from "jwt-decode";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 const history = createBrowserHistory();
@@ -20,15 +19,26 @@ export default class AuthService {
       email: email,
       password: password
     };
+    this.setToken(null);
     axios
       .post("/api/v1/users/authenticate", postBody)
       .then(response => {
         this.setToken(response.data.auth_token);
-        if (location.state && location.state.nextPathname) {
-          history.push(location.state.nextPathname);
-        } else {
-          console.log("Home");
-        }
+      })
+      .catch(_error => {});
+  }
+
+  register(email, password, name) {
+    const postBody = {
+      email: email,
+      password: password,
+      name: name
+    };
+    axios
+      .post("/api/v1/users/register", postBody)
+      .then(response => {
+        this.setToken(null);
+        alert("Registration successful!");
       })
       .catch(_error => {});
   }

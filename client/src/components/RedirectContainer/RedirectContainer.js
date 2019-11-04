@@ -4,7 +4,9 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
+
 import AuthService from "../AuthService";
 
 const styles = {
@@ -40,11 +42,15 @@ class RedirectContainer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.getFullUrl = this.getFullUrl.bind(this);
+    this.authService = new AuthService();
   }
 
   getFullUrl() {
+    const token = this.authService.getToken();
     axios
-      .get(`/api/v1/url_shorts/${this.state.shortUrl}`)
+      .get(`/api/v1/url_shorts/${this.state.shortUrl}`, {
+        headers: { Authorization: token }
+      })
       .then(response => {
         this.setState({ fullUrl: response.data.full_url });
       })
@@ -66,16 +72,19 @@ class RedirectContainer extends Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <input
-            className="taskInput"
-            type="text"
-            value={this.state.shortUrl}
+          <TextField
+            id="outlined-name"
+            label="Short URL"
+            className={classes.textField}
+            value={this.state.shortUlr}
             onChange={this.handleChange}
-            placeholder="Short URL"
-            maxLength="8"
+            margin="normal"
+            variant="outlined"
           />
-          <span className="full-url">
-            <p>{this.state.fullUrl}</p>
+          <span className="full-url" hidden={!this.state.fullUrl}>
+            <p>
+              Redirect to: <a href={this.state.fullUrl}>{this.state.fullUrl}</a>
+            </p>
           </span>
           <span className="error-message">
             <p>{this.state.errorMessage}</p>

@@ -1,24 +1,30 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Pre-requisites
+Ruby 2.6.5
+Install Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli)
+Postgres DB setup
 
-Things you may want to cover:
+## Local Development
+### Install Dependencies
 
-* Ruby version
+    $ bundle install
 
-* System dependencies
+### Set Up Database
 
-* Configuration
+    $ rails db:setup
+    $ rails db:migrate
 
-* Database creation
+### Run app as a heroku app
 
-* Database initialization
+    $ heroku local -f Procfile.dev
 
-* How to run the test suite
+### Usage
+1. Navigate to http://localhost:4000.
+2. Register a user.
+3. Sign In as created user.
+4. Use the various obtions on navigation tabs to create, redirect to or view list of created Short URLs.
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
 
-* ...
+    

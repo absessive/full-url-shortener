@@ -68,7 +68,7 @@ class UserShortUtils extends Component {
     };
     return (
       <MaterialTable
-        title="Simple Action Preview"
+        title="List of Short URLs"
         icons={tableIcons}
         options={options}
         columns={[

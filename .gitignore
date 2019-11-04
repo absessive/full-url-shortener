@@ -16,10 +16,11 @@
 /log
 /coverage
 /**/node_modules
+/node_modules
+/vendor
 
 # Ignore uploaded files in development.
 /storage/*
-!/storage/.keep
 .byebug_history
 .vscode/
 

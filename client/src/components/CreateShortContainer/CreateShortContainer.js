@@ -4,7 +4,10 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/styles";
+
+import AuthService from "./../AuthService";
 
 const styles = {
   card: {
@@ -25,6 +28,9 @@ const styles = {
   cardActions: {
     textAlign: "center",
     justifyContent: "center"
+  },
+  textField: {
+    width: "100%"
   }
 };
 
@@ -39,14 +45,18 @@ class CreateShortContainer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.submitFullUrl = this.submitFullUrl.bind(this);
+    this.authService = new AuthService();
   }
 
   submitFullUrl() {
+    const token = this.authService.getToken();
     const postBody = {
       full_url: this.state.fullUrl
     };
     axios
-      .post("/api/v1/url_shorts/new", postBody)
+      .post("/api/v1/url_shorts/new", postBody, {
+        headers: { Authorization: token }
+      })
       .then(response => {
         this.setState({ shortUrl: response.data.short_url });
       })
@@ -68,13 +78,14 @@ class CreateShortContainer extends Component {
     return (
       <Card className={classes.card}>
         <CardContent className="inputContainer">
-          <input
-            className="taskInput"
-            type="text"
+          <TextField
+            id="outlined-name"
+            label="Full URL"
+            className={classes.textField}
             value={this.state.fullUrl}
             onChange={this.handleChange}
-            placeholder="Add Full URL to shorten"
-            maxLength="100"
+            margin="normal"
+            variant="outlined"
           />
           <span>
             <p>{this.state.shortUrl}</p>
