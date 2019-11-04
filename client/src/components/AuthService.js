@@ -28,7 +28,6 @@ export default class AuthService {
           history.push(location.state.nextPathname);
         } else {
           console.log("Home");
-          return <Redirect to="/home" />;
         }
       })
       .catch(_error => {});

@@ -9,6 +9,7 @@ import PrivateRoute from "./components/Common/PrivateRoute";
 import SignIn from "./components/User/SignIn";
 import CreateShortContainer from "./components/CreateShortContainer/CreateShortContainer";
 import RedirectContainer from "./components/RedirectContainer/RedirectContainer";
+import UserShortUrls from "./components/User/UserShortUrls";
 
 const styles = theme => ({
   root: {
@@ -49,6 +50,9 @@ class App extends Component {
               </Route>
               <Route path="/signin">
                 <SignIn />
+              </Route>
+              <Route path="/urls">
+                <UserShortUrls />
               </Route>
               <Route path="/home">
                 <h2>Home</h2>
