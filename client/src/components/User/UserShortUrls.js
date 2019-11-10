@@ -4,7 +4,9 @@ import { forwardRef } from "react";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Remove from "@material-ui/icons/Remove";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import Clipboard from "react-clipboard.js";
 
 import AuthService from "./../AuthService";
 
@@ -13,6 +15,21 @@ const tableIcons = {
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing(1),
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    borderRadius: 3,
+    border: 0,
+    color: "white",
+    fontSize: "14px",
+    height: 36,
+    padding: "0 30px",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    textTransform: "uppercase"
+  }
+});
 
 class UserShortUtils extends Component {
   constructor(props) {
@@ -61,6 +78,7 @@ class UserShortUtils extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const options = {
       search: false,
       paging: false,
@@ -73,7 +91,19 @@ class UserShortUtils extends Component {
         options={options}
         columns={[
           { title: "Short URL", field: "short_url" },
-          { title: "Full URL", field: "full_url" }
+          { title: "Full URL", field: "full_url" },
+          {
+            title: "Share",
+            field: "share",
+            render: rowData => (
+              <Clipboard
+                className={classes.button}
+                data-clipboard-text={rowData.share}
+              >
+                Copy
+              </Clipboard>
+            )
+          }
         ]}
         data={this.state.data}
         actions={[
@@ -88,4 +118,4 @@ class UserShortUtils extends Component {
   }
 }
 
-export default UserShortUtils;
+export default withStyles(styles)(UserShortUtils);

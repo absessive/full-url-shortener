@@ -37,6 +37,7 @@ class RedirectContainer extends Component {
     this.state = {
       shortUrl: "",
       fullUrl: "",
+      link: "",
       errorMessage: ""
     };
 
@@ -52,7 +53,10 @@ class RedirectContainer extends Component {
         headers: { Authorization: token }
       })
       .then(response => {
-        this.setState({ fullUrl: response.data.full_url });
+        this.setState({
+          fullUrl: response.data.full_url,
+          link: response.data.share
+        });
       })
       .catch(error => {
         if (error.response.status === 400) {

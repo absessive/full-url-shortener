@@ -40,6 +40,7 @@ class CreateShortContainer extends Component {
     this.state = {
       shortUrl: "",
       fullUrl: "",
+      link: "",
       errorMessage: ""
     };
 
@@ -58,7 +59,10 @@ class CreateShortContainer extends Component {
         headers: { Authorization: token }
       })
       .then(response => {
-        this.setState({ shortUrl: response.data.short_url });
+        this.setState({
+          shortUrl: response.data.short_url,
+          link: response.data.share
+        });
       })
       .catch(error => {
         if (error.response.status === 422) {
@@ -88,7 +92,9 @@ class CreateShortContainer extends Component {
             variant="outlined"
           />
           <span>
-            <p>{this.state.shortUrl}</p>
+            <p>
+              <a href={this.state.link}>{this.state.shortUrl}</a>
+            </p>
           </span>
           <span className="error-message">
             <p>{this.state.errorMessage}</p>
