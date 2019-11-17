@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
-    name { "Name" }
-    email { "email@example.com" }
-    password { "password" }
-    password_digest { "password_digest" }
+    name { 'Lando Calrissian' }
+    email { 'land@example.com' }
+    password { 'password' }
+    password_digest { BCrypt::Password.create('password').to_s }
   end
 end

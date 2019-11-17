@@ -12,8 +12,7 @@ module Api
           authenticate_request
           url_short = UrlShort.find_by(short_url: permitted_params[:short_url], 
             user: current_user)
-          base_url = request.base_url
-          JSON.parse url_short.extend(ShortUrlRepresenter).to_json(user_options: {base_url: base_url})
+          represent url_short
         end
 
         desc 'Deletes the associated record'
@@ -25,8 +24,7 @@ module Api
           url_short = UrlShort.find_by(short_url: permitted_params[:short_url],
             user: current_user)
           url_short.destroy
-          base_url = request.base_url
-          JSON.parse url_short.extend(ShortUrlRepresenter).to_json(user_options: {base_url: base_url})
+          represent url_short          
         end
 
         desc 'Creates and/or returns short URL from a full URL'
@@ -35,17 +33,15 @@ module Api
         end
         post '/new' do
           authenticate_request
-          base_url = request.base_url
           url_short = UrlShortCreator.new(params[:full_url], current_user).create
-          JSON.parse url_short.extend(ShortUrlRepresenter).to_json(user_options: {base_url: base_url})
+          represent url_short
         end
 
         desc 'Get list of all short URLs created by user'
         get '/' do
           authenticate_request
           url_shorts = UrlShort.where(user: current_user)
-          base_url = request.base_url
-          JSON.parse url_shorts.extend(ShortUrlRepresenter.for_collection).to_json(user_options: {base_url: base_url})
+          url_shorts.extend(UrlShortRepresenter.for_collection)
         end
       end
     end

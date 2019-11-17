@@ -4,10 +4,13 @@ module Api
       extend ActiveSupport::Concern
 
       included do
-        prefix "api"
-        version "v1", using: :path
+        prefix 'api'
+        version 'v1', using: :path
         default_format :json
         format :json
+        formatter :json, lambda { |object, env|
+          object.to_json(user_options: { base_url: env['HTTP_HOST'] })
+        }
 
         helpers do
           def permitted_params
@@ -25,6 +28,19 @@ module Api
 
           def current_user
             @current_user
+          end
+
+          def represent object_or_collection
+            if object_or_collection.respond_to?(:each)
+              return [] if object_or_collection.to_a.empty?
+              object = object_or_collection.first
+              representer = "#{object.class}Representer".constantize
+              object_or_collection.extend(representer.for_collection)
+            else
+              object = object_or_collection
+              representer = "#{object.class}Representer".constantize
+              object_or_collection.extend(representer)
+            end
           end
         end
 

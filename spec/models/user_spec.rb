@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user) }
+  it 'has email and password' do
+    expect(user.email).not_to be_nil
+    expect(user.password_digest).to be_a(String)
+  end
 end

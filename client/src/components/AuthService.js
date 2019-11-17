@@ -1,11 +1,5 @@
 import decode from "jwt-decode";
 import axios from "axios";
-import { createBrowserHistory } from "history";
-
-const history = createBrowserHistory();
-
-// Get the current location.
-const location = history.location;
 
 export default class AuthService {
   constructor() {

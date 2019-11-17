@@ -4,6 +4,8 @@
 Ruby 2.6.5
 Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 Postgres DB setup
+Node 10.15.1
+Yarn 1.15.2
 
 ## Local Development
 ### Install Backend Dependencies

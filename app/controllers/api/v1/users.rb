@@ -2,7 +2,7 @@ module Api
   module V1
     class Users < Grape::API
       include Api::V1::Defaults
-      
+
       resource :users do
         desc 'Register New User'
         params do
