@@ -67,7 +67,12 @@ App is currently deployed as a Heroku app available at `http://bit-ly.herokuapp.
 ## Future Improvements
 1. Full code and test coverage, both backend and frontend.
 2. Swagger documentation for APIs.
-3. Better UI transitions, and improved user registration and authorization UX.
+3. Better backend logs.
+4. Better UI transitions, and improved user registration and authorization UX.
+5. Performance
+   1. Seperate web service to serve redirect requests. Something like Sidekiq perhaps.
+   2. Save the unique short URL as the primary key instead. Lookups become easier.
+   3. Better hashing algorithm, or implement a hashing algorightm with 62 characters instead [0-9a-zA-Z]. This should enable smaller short URLs.  
 
 ## Assumptions
 1. This app uses the [Blake2](https://blake2.net/) hashing function.

@@ -31,7 +31,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -65,10 +65,6 @@ class SignIn extends Component {
       this.props.setTab(2);
       return <Redirect to="/create" />;
     }
-  }
-
-  componentDidMount() {
-    this.authService.setToken(null);
   }
 
   setRedirect() {

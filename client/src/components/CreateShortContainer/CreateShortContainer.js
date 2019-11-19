@@ -11,7 +11,6 @@ import AuthService from "./../AuthService";
 
 const styles = {
   card: {
-    width: "50%",
     margin: "auto"
   },
   bullet: {
@@ -107,7 +106,7 @@ class CreateShortContainer extends Component {
             variant="contained"
             color="primary"
           >
-            Submit
+            Create
           </Button>
         </CardActions>
       </Card>

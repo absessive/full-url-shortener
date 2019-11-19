@@ -6,6 +6,7 @@ export default class AuthService {
     this.login = this.login.bind(this);
     this.loggedIn = this.loggedIn.bind(this);
     this.getToken = this.getToken.bind(this);
+    this.setToken = this.setToken.bind(this);
   }
 
   login(email, password) {

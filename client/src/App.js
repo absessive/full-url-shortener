@@ -13,6 +13,7 @@ import RedirectContainer from "./components/RedirectContainer/RedirectContainer"
 import UserShortUrls from "./components/User/UserShortUrls";
 import Register from "./components/User/Register";
 import AuthService from "./components/AuthService";
+import SignOut from "./components/User/SignOut";
 
 const styles = theme => ({
   root: {
@@ -34,7 +35,8 @@ const locationMap = {
   "/redirect": 1,
   "/create": 2,
   "/urls": 3,
-  "/register": 4
+  "/register": 4,
+  "/signout": 5
 };
 
 class App extends Component {
@@ -77,12 +79,7 @@ class App extends Component {
               indicatorColor="primary"
               textColor="primary"
             >
-              <Tab
-                label="Sign In/Logout"
-                value={0}
-                component={Link}
-                to="/signin"
-              />
+              <Tab label="Sign In" value={0} component={Link} to="/signin" />
               <Tab
                 label="Redirects"
                 value={1}
@@ -97,6 +94,7 @@ class App extends Component {
                 to="/urls"
               />
               <Tab label="Register" value={4} component={Link} to="/register" />
+              <Tab label="Sign Out" value={5} component={Link} to="/signout" />
             </Tabs>
             <Switch>
               <Route path="/redirect" component={RedirectContainer} />
@@ -104,6 +102,10 @@ class App extends Component {
               <Route
                 path="/signin"
                 render={props => <SignIn {...props} setTab={this.setTab} />}
+              />
+              <Route
+                path="/signout"
+                render={props => <SignOut {...props} setTab={this.setTab} />}
               />
               <Route
                 path="/register"

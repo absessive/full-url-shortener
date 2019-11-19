@@ -11,7 +11,6 @@ import AuthService from "../AuthService";
 
 const styles = {
   card: {
-    width: "50%",
     margin: "auto"
   },
   bullet: {

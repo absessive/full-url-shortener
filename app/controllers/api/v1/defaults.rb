@@ -45,22 +45,33 @@ module Api
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|
+          Rails.logger.error(e.message)
           error_response(message: e.message, status: 404)
         end
 
         rescue_from ActiveRecord::RecordInvalid do |e|
+          Rails.logger.error(e.message)
           error_response(message: e.message, status: 422)
         end
 
         rescue_from ActiveModel::StrictValidationFailed do |e|
+          Rails.logger.error(e.message)
           error_response(message: e.message, status: 422)
         end
 
         rescue_from NoMethodError do |e|
+          Rails.logger.error(e.message)
+          error_response(message: e.message, status: 404)
+        end
+
+        rescue_from NameError do |e|
+          byebug
+          Rails.logger.error(e.message)
           error_response(message: e.message, status: 404)
         end
 
         rescue_from ApplicationController::NotAuthorized do |e|
+          Rails.logger.error(e.message)
           error_response(message: e.message, status: 401)
         end
       end
